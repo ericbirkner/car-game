@@ -13,9 +13,11 @@ var counter = 0;
 var dead = false;
 var block = 0;
 var go;
-var obs_vel = -320;
+var velocity = -320;
 var sprite_vel = 4;
 var ground; 
+var salto;
+var music;
 
 var play = {
     create : function() {
@@ -28,6 +30,10 @@ var play = {
 		sky =  game.add.tileSprite(0, -32, game.world.bounds.width, 720, 'sky');
 		
     	boom = game.add.audio('boom');
+		salto = game.add.audio('jump');
+		music = game.add.audio('music');
+
+    	music.play();
 		
         /* Platform group */
         platforms = game.add.group();
@@ -80,7 +86,7 @@ var play = {
 		game.time.events.loop(Phaser.Timer.SECOND, updateCounter, this);
 		
 		//game over
-		go = game.add.text(game.world.centerX, game.world.centerY, "Gamer Over", { font: "65px Arial", fill: "#ffffff", align: "center" });
+		go = game.add.text(game.world.centerX, game.world.centerY, "Game Over", { font: "65px Arial", fill: "#ffffff", align: "center" });
 
 		// text.tint = 0xff00033;
 		go.anchor.set(0.5);
@@ -100,8 +106,8 @@ var play = {
 		//game.physics.arcade.overlap(player, obstacles, collisionPlayer, null, this);
         game.physics.arcade.collide(player, obstacles, collisionPlayer, null, this);
 		playerGround = game.physics.arcade.collide(player, platforms);	
-        sprite_vel = sprite_vel + 0.001;    
-		obs_vel = obs_vel + 0.005;    
+        sprite_vel = sprite_vel + 0.005;    
+		velocity = velocity + 0.2;    
     },
 	
 	render :function(){
@@ -146,8 +152,8 @@ function setupExplosiones (obstacle) {
 function onTap(pointer, doubleTap) {
     if (playerGround) {
         //player.animations.play('jump', 29.5);
-        player.body.obs_vel.y -= 200;
-		
+        player.body.velocity.y -= 200;
+		salto.play();
 		if(block>0){
         	addObstacle(game.world.width, game.world.height - 74);
 		}
@@ -167,7 +173,7 @@ function addObstacle(x, y) {
     obstacles.add(obstacle);
     game.physics.arcade.enable(obstacle);
     
-    obstacle.body.obs_vel.x = obs_vel;
+    obstacle.body.velocity.x = velocity;
     
     //obstacle.checkWorldBounds = true;
 	obstacle.body.collideWorldBounds = false;
@@ -198,7 +204,7 @@ function down(item) {
 	game.state.restart();
 	dead = false;
 	sprite_vel = 4;
-	obs_vel = -320;
+	music.pause();
     /*
 	clicks++;
 

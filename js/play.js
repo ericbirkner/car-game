@@ -13,6 +13,8 @@ var counter = 0;
 var dead = false;
 var block = 0;
 var go;
+var velocity = -320;
+
 
 var play = {
     create : function() {
@@ -53,7 +55,7 @@ var play = {
         player.body.enable = true;
         player.body.gravity.y = 250;
         player.body.collideWorldBounds = true;
-        
+		
         //player.body.setSize(260, 400, 100, 40); //Correc tsize.
     
         /*
@@ -91,16 +93,19 @@ var play = {
     },
 
     update : function() {
-		sky.tilePosition.x -= 3;
+		sky.tilePosition.x -= 4;
 		//colision con los bloques
-		game.physics.arcade.overlap(player, obstacles, collisionPlayer, null, this);
-        playerGround = game.physics.arcade.collide(player, platforms);	
-               
+		//game.physics.arcade.overlap(player, obstacles, collisionPlayer, null, this);
+        game.physics.arcade.collide(player, obstacles, collisionPlayer, null, this);
+		playerGround = game.physics.arcade.collide(player, platforms);	
+        velocity = velocity + 10;       
     },
 	
 	render :function(){
+		/*
 		 game.debug.text("Time until event: " + game.time.events.duration.toFixed(0), 32, 32);
     	 game.debug.text("Next tick: " + game.time.events.next.toFixed(0), 32, 64);
+	    */
 	}
 };
 
@@ -159,10 +164,17 @@ function addObstacle(x, y) {
     obstacles.add(obstacle);
     game.physics.arcade.enable(obstacle);
     
-    obstacle.body.velocity.x = -320;
+    obstacle.body.velocity.x = velocity;
     
-    obstacle.checkWorldBounds = true;
-    obstacle.outOfBoundsKill = true;
+    //obstacle.checkWorldBounds = true;
+	obstacle.body.collideWorldBounds = false;
+	
+    obstacle.body.checkCollision.up = false;
+	//obstacle.checkCollision.right = false;
+	
+	
+	obstacle.outOfBoundsKill = true;	
+	
 	block++;
 }
 

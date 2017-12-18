@@ -24,6 +24,7 @@ var play = {
         
 		game.physics.startSystem(Phaser.Physics.ARCADE); //Arcade Physics.
         game.input.onTap.add(onTap, this);
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
         
         /* Sprites for backgrounds */
         //sky = game.add.sprite(0, 0, 'sky');
@@ -83,6 +84,9 @@ var play = {
 		//contador
 		text = game.add.text(game.world.width - 74, 24, 'Puntos: 0', { font: "24px Arial", fill: "#ffffff", align: "center" });
     	text.anchor.setTo(0.5, 0.5);
+		text.inputEnabled = true;
+		text.events.onInputDown.add(gofull, this);
+		
 		game.time.events.loop(Phaser.Timer.SECOND, updateCounter, this);
 		
 		//game over
@@ -205,11 +209,11 @@ function down(item) {
 	dead = false;
 	sprite_vel = 4;
 	music.pause();
-    /*
-	clicks++;
+    
+}
 
-    item.text = "clicked " + clicks + " times";
+function gofull() {
 
-    item.tint = (item.tint === 0xffffff) ? 0xff0000 : 0xffffff;
-	*/
+    game.scale.startFullScreen();
+
 }

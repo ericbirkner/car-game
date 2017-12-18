@@ -12,6 +12,7 @@ var text;
 var counter = 0;
 var dead = false;
 var block = 0;
+var go;
 
 var play = {
     create : function() {
@@ -68,11 +69,20 @@ var play = {
 		
         /* Score */
         //scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000'});
+		
 		//contador
-		text = game.add.text(game.world.width - 74, 24, 'Counter: 0', { font: "24px Arial", fill: "#ffffff", align: "center" });
+		text = game.add.text(game.world.width - 74, 24, 'Puntos: 0', { font: "24px Arial", fill: "#ffffff", align: "center" });
     	text.anchor.setTo(0.5, 0.5);
 		game.time.events.loop(Phaser.Timer.SECOND, updateCounter, this);
 		
+		//game over
+		go = game.add.text(game.world.centerX, game.world.centerY, "Gamer Over", { font: "65px Arial", fill: "#ffffff", align: "center" });
+
+		// text.tint = 0xff00033;
+		go.anchor.set(0.5);
+		go.inputEnabled = true;
+		go.events.onInputDown.add(down, this);
+		go.visible = false;
 		
 		//creo el primer obtaculo
 		setTimeout(function(){ addObstacle(game.world.width, game.world.height - 74); }, 3000);
@@ -110,6 +120,8 @@ function collisionPlayer (player, obtacle) {
 	
 	console.log('murio');
 	dead = true;
+	
+	
 }
 
 function setupExplosiones (obstacle) {
@@ -158,6 +170,23 @@ function updateCounter() {
 	
 	if(!dead){
     	counter++;
-		text.setText('Counter: ' + counter);
+		text.setText('Puntos: ' + counter);
+	}else{
+		go.visible = true;
 	}	
+}
+
+function down(item) {
+	//aca se resetea el juego
+	item.visible = false;
+	counter = 0;
+	game.state.restart();
+	dead = false;
+    /*
+	clicks++;
+
+    item.text = "clicked " + clicks + " times";
+
+    item.tint = (item.tint === 0xffffff) ? 0xff0000 : 0xffffff;
+	*/
 }

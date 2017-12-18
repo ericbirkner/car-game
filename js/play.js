@@ -13,8 +13,9 @@ var counter = 0;
 var dead = false;
 var block = 0;
 var go;
-var velocity = -320;
-
+var obs_vel = -320;
+var sprite_vel = 4;
+var ground; 
 
 var play = {
     create : function() {
@@ -25,6 +26,7 @@ var play = {
         /* Sprites for backgrounds */
         //sky = game.add.sprite(0, 0, 'sky');
 		sky =  game.add.tileSprite(0, -32, game.world.bounds.width, 720, 'sky');
+		
     	boom = game.add.audio('boom');
 		
         /* Platform group */
@@ -41,7 +43,7 @@ var play = {
         //obstacles.body.debug = true;
 
         /* Ground stuff */
-        var ground = platforms.create(0, game.world.height - 32, 'ground');
+        ground = platforms.create(0, game.world.height - 32, 'ground');
         ground.scale.setTo(1, 1);
         ground.body.immovable = true;
     
@@ -93,19 +95,20 @@ var play = {
     },
 
     update : function() {
-		sky.tilePosition.x -= 4;
+		sky.tilePosition.x -= sprite_vel;
 		//colision con los bloques
 		//game.physics.arcade.overlap(player, obstacles, collisionPlayer, null, this);
         game.physics.arcade.collide(player, obstacles, collisionPlayer, null, this);
 		playerGround = game.physics.arcade.collide(player, platforms);	
-        velocity = velocity + 10;       
+        sprite_vel = sprite_vel + 0.001;    
+		obs_vel = obs_vel + 0.005;    
     },
 	
 	render :function(){
 		/*
 		 game.debug.text("Time until event: " + game.time.events.duration.toFixed(0), 32, 32);
     	 game.debug.text("Next tick: " + game.time.events.next.toFixed(0), 32, 64);
-	    */
+		*/
 	}
 };
 
@@ -143,7 +146,7 @@ function setupExplosiones (obstacle) {
 function onTap(pointer, doubleTap) {
     if (playerGround) {
         //player.animations.play('jump', 29.5);
-        player.body.velocity.y -= 200;
+        player.body.obs_vel.y -= 200;
 		
 		if(block>0){
         	addObstacle(game.world.width, game.world.height - 74);
@@ -164,7 +167,7 @@ function addObstacle(x, y) {
     obstacles.add(obstacle);
     game.physics.arcade.enable(obstacle);
     
-    obstacle.body.velocity.x = velocity;
+    obstacle.body.obs_vel.x = obs_vel;
     
     //obstacle.checkWorldBounds = true;
 	obstacle.body.collideWorldBounds = false;
@@ -194,6 +197,8 @@ function down(item) {
 	counter = 0;
 	game.state.restart();
 	dead = false;
+	sprite_vel = 4;
+	obs_vel = -320;
     /*
 	clicks++;
 

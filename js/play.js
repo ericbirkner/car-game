@@ -82,7 +82,7 @@ var play = {
         //scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000'});
 		
 		//contador
-		text = game.add.text(game.world.width - 74, 24, 'Puntos: 0', { font: "24px Arial", fill: "#ffffff", align: "center" });
+		text = game.add.text(game.world.width - 107, 28, 'Puntos: 0', { font: "17px Press Start 2P", fill: "#ffffff", align: "center" });
     	text.anchor.setTo(0.5, 0.5);
 		text.inputEnabled = true;
 		text.events.onInputDown.add(gofull, this);
@@ -90,7 +90,7 @@ var play = {
 		game.time.events.loop(Phaser.Timer.SECOND, updateCounter, this);
 		
 		//game over
-		go = game.add.text(game.world.centerX, game.world.centerY, "Game Over", { font: "65px Arial", fill: "#ffffff", align: "center" });
+		go = game.add.text(game.world.centerX, game.world.centerY, "Game Over", { font: "65px Press Start 2P", fill: "#ffffff", align: "center" });
 
 		// text.tint = 0xff00033;
 		go.anchor.set(0.5);
@@ -195,7 +195,7 @@ function updateCounter() {
 	
 	if(!dead){
     	counter++;
-		text.setText('Puntos: ' + counter);
+		text.setText('Puntos: '+ counter);
 	}else{
 		go.visible = true;
 	}	

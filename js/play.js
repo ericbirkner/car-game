@@ -110,8 +110,8 @@ var play = {
 		//game.physics.arcade.overlap(player, obstacles, collisionPlayer, null, this);
         game.physics.arcade.collide(player, obstacles, collisionPlayer, null, this);
 		playerGround = game.physics.arcade.collide(player, platforms);	
-        sprite_vel = sprite_vel + 0.005;    
-		velocity = velocity + 0.2;    
+        sprite_vel = sprite_vel + 0.001;    
+		velocity = velocity + 0.05;    
     },
 	
 	render :function(){

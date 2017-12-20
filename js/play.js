@@ -27,10 +27,9 @@ var play = {
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
         
         /* Sprites for backgrounds */
-        //sky = game.add.sprite(0, 0, 'sky');
-		sky =  game.add.tileSprite(0, -32, game.world.bounds.width, 720, 'sky');
+        sky =  game.add.tileSprite(0, -32, game.world.width, game.world.height, 'sky');
 		
-    	boom = game.add.audio('boom');
+		boom = game.add.audio('boom');
 		salto = game.add.audio('jump');
 		music = game.add.audio('music');
 
@@ -99,8 +98,7 @@ var play = {
 		go.visible = false;
 		
 		//creo el primer obtaculo
-		setTimeout(function(){ addObstacle(game.world.width, game.world.height - 74); }, 3000);
-		
+		setTimeout(function(){ addObstacle(game.world.width, game.world.height - 74); }, 3000);		
 		
     },
 

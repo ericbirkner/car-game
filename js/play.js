@@ -1,4 +1,4 @@
-/* Game.js */
+/* play.js */
 
 var platforms;
 var player;
@@ -21,13 +21,13 @@ var music;
 
 var play = {
     create : function() {
-        
+        console.log("Play!");
+		
 		game.physics.startSystem(Phaser.Physics.ARCADE); //Arcade Physics.
         game.input.onTap.add(onTap, this);
-		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		/* Sprites for backgrounds */
         
-        /* Sprites for backgrounds */
-        sky =  game.add.tileSprite(0, -32, game.world.width, game.world.height, 'sky');
+		sky =  game.add.tileSprite(0, -32, game.world.width, game.world.height, 'sky');
 		
 		boom = game.add.audio('boom');
 		salto = game.add.audio('jump');
@@ -201,13 +201,16 @@ function updateCounter() {
 
 function down(item) {
 	//aca se resetea el juego
+	
 	item.visible = false;
 	counter = 0;
 	game.state.restart();
 	dead = false;
 	sprite_vel = 4;
 	music.pause();
-    
+    game.state.start('menu');
+	
+	
 }
 
 function gofull() {

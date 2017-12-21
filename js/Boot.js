@@ -1,8 +1,9 @@
-/* Boot.js */
+/* boot.js */
+
 var boot = {
     preload : function() {
         console.log("Booting!");
-		logo = game.load.image('logo', 'assets/logo8bit.png');
+		game.load.image('logo', 'assets/logo8bit.png');
     },
     
     create : function() {

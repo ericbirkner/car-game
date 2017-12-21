@@ -1,4 +1,4 @@
-/* Load.js */
+/* load.js */
 var logo;
 var load = {
     preload : function() {
@@ -24,6 +24,7 @@ var load = {
     },
 
     create : function() {
-        game.state.start('play');
+		
+        game.state.start('menu');
     }
 };

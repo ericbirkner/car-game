@@ -4,7 +4,7 @@ var player;
 var obstacle;
 var obstacles;
 var explosions;
-var playerGround;
+var playersuelo;
 var playerObstacle;
 var boom;
 var text;
@@ -14,31 +14,36 @@ var block = 0;
 var go;
 var velocity = -320;
 var sprite_vel = 4;
-var ground; 
+var road_vel = 1250;
+var suelo; 
+var camino;
 var salto;
+var nubes;
 var music;
-var mountainsBack, mountainsMid1, mountainsMid2,dayCycle,backgroundSprite,sunSprite,moonSprite,bgBitMap;
+var mountainsBack, mountainsMid1, mountainsMid2,dayCycle,backsueloSprite,sunSprite,moonSprite,bgBitMap;
+var day = '#b2ddc8';
+var night = '#1f263b';
 
 var play = {
     create : function() {
         console.log("Play!");
-		game.stage.backgroundColor = '#b2ddc8';
+		game.stage.backgroundColor = day;
 		
      
+		sunSprite = game.add.sprite(50, 20, 'sun');
+        moonSprite = game.add.sprite(650, 30, 'moon');
+ 		moonSprite.visible = false;
 		
-		backgroundSprite = this.game.add.sprite(0, 0, bgBitMap);
- 
-        sunSprite = game.add.sprite(50, -250, 'sun');
-        moonSprite = game.add.sprite(game.width - (game.width / 4), game.height + 500, 'moon');
- 		
-		//game.stage.backgroundColor = '#697e96';
 		
 		game.physics.startSystem(Phaser.Physics.ARCADE); //Arcade Physics.
         game.input.onTap.add(onTap, this);
-		/* Sprites for backgrounds */
+		/* Sprites for backsuelos */
         
-		//sky =  game.add.tileSprite(0, -32, game.world.width, game.world.height, 'sky');
+		sky = game.add.tileSprite(0, 0, game.world.width, game.world.height, 'sky');
+		camino = game.add.tileSprite(0, game.world.height-37, game.world.width, 37, 'camino');
+		nubes = game.add.tileSprite(0, 0, game.world.width, game.world.height, 'nubes');
 		
+		/*
 		mountainsBack = game.add.tileSprite(0,game.height - game.cache.getImage('mountains-back').height,
         2048,game.cache.getImage('mountains-back').height,'mountains-back');
  
@@ -47,14 +52,15 @@ var play = {
  
     	mountainsMid2 = game.add.tileSprite(0, game.height - game.cache.getImage('mountains-mid2').height,
         2048, game.cache.getImage('mountains-mid2').height, 'mountains-mid2');
-		
+		*/
 		
 		
 		boom = game.add.audio('boom');
 		salto = game.add.audio('jump');
 		music = game.add.audio('music');
 
-    	music.play();
+    	//musica de fondo
+		music.play();
 		
         /* Platform group */
         platforms = game.add.group();
@@ -69,10 +75,10 @@ var play = {
 
         //obstacles.body.debug = true;
 
-        /* Ground stuff */
-        ground = platforms.create(0, game.world.height - 32, 'ground');
-        ground.scale.setTo(1, 1);
-        ground.body.immovable = true;
+        /* suelo stuff */
+        suelo = platforms.create(0, game.world.height - 37, 'suelo');
+        
+        suelo.body.immovable = true;
 		
 		
 		//parallaxql	
@@ -89,6 +95,8 @@ var play = {
         player.body.enable = true;
         player.body.gravity.y = 250;
         player.body.collideWorldBounds = true;
+		player.animations.add('walk');
+    	player.animations.play('walk', 50, true);
 		
         //player.body.setSize(260, 400, 100, 40); //Correc tsize.
     
@@ -129,17 +137,26 @@ var play = {
     },
 
     update : function() {
-		//sky.tilePosition.x -= sprite_vel;
+		sprite_vel = sprite_vel + 0.01;    
+		velocity = velocity - 0.05;
+		road_vel = road_vel - 0.05;
+		
+		sky.tilePosition.x -= 2;
+		camino.tilePosition.x -= 8;
+		nubes.tilePosition.x -= 1;
+		
+		/*
 		mountainsBack.tilePosition.x -= 0.05;
         mountainsMid1.tilePosition.x -= 0.3;
         mountainsMid2.tilePosition.x -= 0.75;   
-
+		*/
+		
+		
 		//colision con los bloques
 		//game.physics.arcade.overlap(player, obstacles, collisionPlayer, null, this);
         game.physics.arcade.collide(player, obstacles, collisionPlayer, null, this);
-		playerGround = game.physics.arcade.collide(player, platforms);	
-        sprite_vel = sprite_vel + 0.01;    
-		velocity = velocity - 0.05;
+		playersuelo = game.physics.arcade.collide(player, platforms);	
+       
 		console.log(velocity);
     },
 	
@@ -183,7 +200,7 @@ function setupExplosiones (obstacle) {
  * @param {bool} doubleTap 
  */
 function onTap(pointer, doubleTap) {
-    if (playerGround) {
+    if (playersuelo) {
         //player.animations.play('jump', 29.5);
         player.body.velocity.y -= 190;
 		salto.play();
@@ -225,7 +242,9 @@ function updateCounter() {
 	if(!dead){
     	counter++;
 		if(counter>5){
-			game.stage.backgroundColor = '#b2dd12';
+			game.stage.backgroundColor = night;
+			sunSprite.visible = false;
+			moonSprite.visible = true;
 		}
 		text.setText('Puntos: '+ counter);
 	}else{
@@ -242,6 +261,7 @@ function down(item) {
 	dead = false;
 	sprite_vel = 4;
 	velocity = -320;
+	road_vel = -250;
 	music.pause();
     game.state.start('menu');
 	

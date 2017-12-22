@@ -12,6 +12,7 @@ var config = {
 
 if (testExp.test(navigator.userAgent)){
      var game = new Phaser.Game(window.screen.availWidth * window.devicePixelRatio, window.screen.availHeight * window.devicePixelRatio, Phaser.CANVAS, 'game');
+	 //alert('mobile');
 }else{
       var game = new Phaser.Game(config);
 }

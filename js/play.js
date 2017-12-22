@@ -14,7 +14,7 @@ var block = 0;
 var go;
 var velocity = -320;
 var sprite_vel = 4;
-var road_vel = 1250;
+var road_vel = 8;
 var suelo; 
 var camino;
 var salto;
@@ -139,10 +139,10 @@ var play = {
     update : function() {
 		sprite_vel = sprite_vel + 0.01;    
 		velocity = velocity - 0.05;
-		road_vel = road_vel - 0.05;
+		road_vel = road_vel + 0.05;
 		
 		sky.tilePosition.x -= 2;
-		camino.tilePosition.x -= 8;
+		camino.tilePosition.x -= road_vel;
 		nubes.tilePosition.x -= 1;
 		
 		/*
@@ -241,7 +241,7 @@ function updateCounter() {
 	
 	if(!dead){
     	counter++;
-		if(counter>5){
+		if(counter>25){
 			game.stage.backgroundColor = night;
 			sunSprite.visible = false;
 			moonSprite.visible = true;

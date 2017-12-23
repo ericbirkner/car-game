@@ -84,8 +84,7 @@ var play = {
 		sky.tilePosition.x -= 3;
 		//colision con los bloques
 		game.physics.arcade.overlap(player, obstacles, collisionPlayer, null, this);
-        
-		playerGround = game.physics.arcade.collide(player, platforms);	
+        playerGround = game.physics.arcade.collide(player, platforms);	
                
     },
 	

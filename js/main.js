@@ -1,6 +1,6 @@
 testExp = new RegExp('Android|webOS|iPhone|iPad|' +
     		       'BlackBerry|Windows Phone|'  +
-    		       'Opera Mini|IEMobile|Mobile' , 
+    		       'Opera Mini|IEMobile|Mobile' ,
     		      'i');
 
 var config = {
@@ -11,14 +11,15 @@ var config = {
 
 
 if (testExp.test(navigator.userAgent)){
-     var game = new Phaser.Game(window.screen.availWidth * window.devicePixelRatio, window.screen.availHeight * window.devicePixelRatio, Phaser.CANVAS, 'game');
-	 //alert('mobile');
-}else{
-      var game = new Phaser.Game(config);
+  var config = {
+      width: 1080,
+      height: 720,
+      renderer: Phaser.CANVAS
+  };
 }
 
- 
 
+var game = new Phaser.Game(config);
 
 
 game.state.add('boot', boot);

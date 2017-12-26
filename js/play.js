@@ -149,7 +149,7 @@ var play = {
     			onTap();
     		}
 
-    		console.log(velocity);
+    		//console.log(velocity);
     },
 
 	render :function(){

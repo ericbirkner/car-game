@@ -226,19 +226,13 @@ function onTap(pointer, doubleTap) {
  */
 function addObstacle() {
 	
-	if (counter>5){
-		x = Math.floor(Math.random() * 2) + 1 
-		if(x==1){
-			addPiedra();   
-		}else{
-			addPoste();
-		}
-		
+	var rnd = Math.floor(Math.random() * 5) + 1 
+	console.log(rnd);
+	if(x==3){
+		addPoste();
 	}else{
-		addPiedra();
+		addPiedra();   
 	}
-		
-		
 	
 }
 

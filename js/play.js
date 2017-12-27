@@ -15,7 +15,8 @@ var block = 0;
 var go;
 var velocity = -320;
 var sprite_vel = 4;
-var road_vel = 8;
+var road_vel = -500;
+var tiempo_obstaculo = 1.8;
 var suelo;
 var camino;
 var salto;
@@ -28,6 +29,7 @@ var btn_salto;
 
 var play = {
 	create: function () {
+		this.setInitialValues();
 		console.log("Play!");
 		game.stage.backgroundColor = day;
 
@@ -46,9 +48,14 @@ var play = {
 		/* Sprites fondos */
 
 		sky = game.add.tileSprite(0, 0, game.world.width, game.world.height, 'sky');
+		sky.autoScroll(-100, 0);
+		
 		camino = game.add.tileSprite(0, game.world.height - 37, game.world.width, 37, 'camino');
+		camino.autoScroll(road_vel, 0);
+		
 		nubes = game.add.tileSprite(0, 0, game.world.width, game.world.height, 'nubes');
-
+		nubes.autoScroll(-10, 0);
+		
 		//sonidos
 		boom = game.add.audio('boom');
 		salto = game.add.audio('jump');
@@ -91,19 +98,6 @@ var play = {
 		player.animations.add('walk');
 		player.animations.play('walk', 50, true);
 
-		//player.body.setSize(260, 400, 100, 40); //Correc tsize.
-
-		/*
-		player.animations.add('death', Phaser.Animation.generateFrameNames('Death (', 1, 30, ")"), 0, false);
-        player.animations.add('jump', Phaser.Animation.generateFrameNames('Jump (', 1, 30, ")"), 0, false);
-
-        player.animations.add('idle', Phaser.Animation.generateFrameNames('Idle (', 1, 16, ")"), 0, true);
-        player.animations.add('run', Phaser.Animation.generateFrameNames('Run (', 1, 20, ")"), 0, true);
-        player.animations.add('walk', Phaser.Animation.generateFrameNames('Walk (', 1, 20, ")"), 0, true);
-
-        player.animations.play('run', 60); //Play starting off.
-    	*/
-
 		/* Score */
 		//scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000'});
 
@@ -133,33 +127,48 @@ var play = {
 		go.visible = false;
 
 		//creo el primer obtaculo
+		/*
 		setTimeout(function () {
 			addObstacle();
 		}, 3000);
+		*/
+		
+		this.generarObstaculos = game.time.events.loop(Phaser.Timer.SECOND * this.tiempo, this.generarObstaculos, this);
+    	this.generarObstaculos.timer.start();
 
 	},
 
 	update: function () {
 		sprite_vel = sprite_vel + 0.01;
 		velocity = velocity - 0.05;
-		road_vel = road_vel + 0.05;
-
+		road_vel = road_vel - 0.5;
+		//aca hago un delay negativo y acelero la creacion de obstaculos
+		this.generarObstaculos.delay -= 0.1;
+		/*
 		sky.tilePosition.x -= 2;
 		camino.tilePosition.x -= road_vel;
 		nubes.tilePosition.x -= 1;
-
+		*/
 		//colision con los bloques
 
 		game.physics.arcade.collide(player, arribas, collisionPlayer, null, this);
 		game.physics.arcade.collide(player, obstacles, collisionPlayer, null, this);
 		playersuelo = game.physics.arcade.collide(player, platforms);
-
+		
 		//si salto con el boton
 		if (btn_salto.isDown) {
 			onTap();
 		}
 
-		//console.log(velocity);
+		console.log(this.tiempo=1.5);
+	},
+	generarObstaculos: function() {  
+    	//console.log('generating pipes!');
+		addObstacle();
+	},
+	
+	setInitialValues: function(){
+		this.tiempo=1.8;
 	},
 
 	render: function () {
@@ -189,21 +198,6 @@ function collisionPlayer(player, obtacle) {
 	dead = true;
 }
 
-/*
-function collisionArriba(player, obtacle) {
-	//When a bullet hits an alien we kill them both
-	obtacle.kill();
-	player.kill();
-	boom.play();
-
-	var explosion = explosions.getFirstExists(false);
-	explosion.reset(player.body.x + 150, player.body.y);
-	explosion.play('kaboom', 30, false, true);
-
-	console.log('murio');
-	dead = true;
-}
-*/
 
 function setupExplosiones(obstacle) {
 	obstacle.anchor.x = 0.5;
@@ -222,7 +216,7 @@ function onTap(pointer, doubleTap) {
 		player.body.velocity.y -= 190;
 		salto.play();
 		if (block > 0) {
-			addObstacle();
+			//addObstacle();
 		}
 	}
 }
@@ -231,7 +225,7 @@ function onTap(pointer, doubleTap) {
  * @desc Add obstacle.
  */
 function addObstacle() {
-	
+	/*
 	if (counter % 5 == 0){
 		
 		var arriba = game.add.sprite(game.world.width, game.world.height - 260, 'arriba', true);
@@ -249,7 +243,8 @@ function addObstacle() {
 		
 		//addObstacle();
 		
-	}else{
+	}
+	*/
 		var obstacle = game.add.sprite(game.world.width, game.world.height - 74, 'obstacle', false)
 		obstacles.add(obstacle);
 		game.physics.arcade.enable(obstacle);
@@ -263,7 +258,6 @@ function addObstacle() {
 		//obstacle.checkCollision.right = false;
 		obstacle.outOfBoundsKill = true;
 		
-	}
 	
 	block++;
 	
@@ -299,6 +293,14 @@ function down(item) {
 
 
 }
+
+function borra_obstculo(obs) {
+    // kill obstacle after it moves out of bounds
+    if (obs.right < game.world.bounds.left) {
+      obs.kill();
+    }
+}
+
 
 function gofull() {
 

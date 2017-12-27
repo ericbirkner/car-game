@@ -225,27 +225,26 @@ function onTap(pointer, doubleTap) {
  * @desc Add obstacle.
  */
 function addObstacle() {
-	/*
-	if (counter % 5 == 0){
+	
+	if (counter>5){
+		x = Math.floor(Math.random() * 2) + 1 
+		if(x==1){
+			addPiedra();   
+		}else{
+			addPoste();
+		}
 		
-		var arriba = game.add.sprite(game.world.width, game.world.height - 260, 'arriba', true);
-		var palo = game.add.sprite(game.world.width, game.world.height - 235, 'palo', false);
-		arribas.add(arriba);
-		palos.add(palo);
-		
-		game.physics.arcade.enable(arriba,true);
-		arriba.body.velocity.x = velocity;
-		arriba.body.setSize(118, 75, 118, 50);	
-		arriba.body.collideWorldBounds = false;
-		
-		game.physics.arcade.enable(palo,true);
-		palo.body.velocity.x = velocity;
-		
-		//addObstacle();
-		
+	}else{
+		addPiedra();
 	}
-	*/
-		var obstacle = game.add.sprite(game.world.width, game.world.height - 74, 'obstacle', false)
+		
+		
+	
+}
+
+
+function addPiedra(){
+	var obstacle = game.add.sprite(game.world.width, game.world.height - 74, 'obstacle', false)
 		obstacles.add(obstacle);
 		game.physics.arcade.enable(obstacle);
 
@@ -258,9 +257,21 @@ function addObstacle() {
 		//obstacle.checkCollision.right = false;
 		obstacle.outOfBoundsKill = true;
 		
-	
-	block++;
-	
+}
+
+function addPoste(){
+	var arriba = game.add.sprite(game.world.width, game.world.height - 260, 'arriba', true);
+	var palo = game.add.sprite(game.world.width, game.world.height - 235, 'palo', true);
+	arribas.add(arriba);
+	palos.add(palo);
+
+	game.physics.arcade.enable(arriba,true);
+	arriba.body.velocity.x = velocity;
+	arriba.body.setSize(118, 75, 50, 30);	
+	arriba.body.collideWorldBounds = false;
+
+	game.physics.arcade.enable(palo,true);
+	palo.body.velocity.x = velocity;
 }
 
 function updateCounter() {

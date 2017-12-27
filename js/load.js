@@ -10,8 +10,8 @@ var load = {
         game.load.image('sky', 'assets/Montana_2.png');
         game.load.image('suelo', 'assets/suelo.png');
 		game.load.image('camino', 'assets/camino.png');
-
-
+		game.load.image('arriba', 'assets/arriba.png');
+		game.load.image('palo', 'assets/palo.png');
 
 		game.load.image('obstacle', 'assets/roca.png');
 

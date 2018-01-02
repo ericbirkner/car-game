@@ -140,8 +140,8 @@ var play = {
 
 	update: function () {
 		sprite_vel = sprite_vel + 0.01;
-		velocity = velocity - 0.05;
-		road_vel = road_vel - 0.5;
+		velocity = velocity - 0.1;
+		road_vel = road_vel - 0.3;
 		//aca hago un delay negativo y acelero la creacion de obstaculos
 		this.generarObstaculos.delay -= 0.1;
 		/*
@@ -159,8 +159,10 @@ var play = {
 		if (btn_salto.isDown) {
 			onTap();
 		}
-
-		console.log(this.tiempo=1.5);
+		
+		camino.autoScroll(road_vel, 0);
+		
+		console.log('velocidad:'+road_vel);
 	},
 	generarObstaculos: function() {  
     	//console.log('generating pipes!');
@@ -228,7 +230,7 @@ function addObstacle() {
 	
 	var rnd = Math.floor(Math.random() * 5) + 1 
 	console.log(rnd);
-	if(x==3){
+	if(rnd==3){
 		addPoste();
 	}else{
 		addPiedra();   

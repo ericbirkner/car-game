@@ -62,7 +62,7 @@ var play = {
 		music = game.add.audio('music');
 
 		//musica de fondo
-		//music.play();
+		music.play();
 
 		/* Platform group */
 		platforms = game.add.group();

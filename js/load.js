@@ -42,7 +42,7 @@ var load = {
 
     create : function() {
 		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+		//game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
         game.state.start('menu');
     }
 };

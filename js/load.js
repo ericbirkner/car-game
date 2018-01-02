@@ -33,7 +33,7 @@ var load = {
 		game.load.image('sun', 'assets/sun.png');
         game.load.image('moon', 'assets/moon.png');
 
-		game.load.image('logo', 'assets/Logo_Juego.png');
+		game.load.image('logo', 'assets/logo_final.png');
 
 		game.load.image('nubes', 'assets/nubes.png');
 

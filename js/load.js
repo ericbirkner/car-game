@@ -2,7 +2,7 @@
 var text2;
 var load = {
     preload : function() {
-        console.log("Loading!");
+    console.log("Loading!");
 
 		text2 = game.add.text(game.world.centerX, game.world.centerY, "Cargando...", { font: "25px Press Start 2P", fill: "#ffffff", align: "center" });
 		text2.anchor.setTo(0.5, 0.5);
@@ -33,11 +33,11 @@ var load = {
 		game.load.image('sun', 'assets/sun.png');
         game.load.image('moon', 'assets/moon.png');
 
-		game.load.image('logo', 'assets/logo_final.png');
+		game.load.image('logo', 'assets/Logo_Juego_Final.png');
 
 		game.load.image('nubes', 'assets/nubes.png');
 
-		
+
     },
 
     create : function() {

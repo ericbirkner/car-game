@@ -109,6 +109,7 @@ var play = {
 		});
 		text.anchor.setTo(0.5, 0.5);
 		text.inputEnabled = true;
+		text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 15);
 		text.events.onInputDown.add(gofull, this);
 
 		game.time.events.loop(Phaser.Timer.SECOND, updateCounter, this);
@@ -122,6 +123,7 @@ var play = {
 
 		// text.tint = 0xff00033;
 		go.anchor.set(0.5);
+		go.setShadow(5, 5, 'rgba(0,0,0,0.5)', 15);
 		go.inputEnabled = true;
 		go.events.onInputDown.add(down, this);
 		go.visible = false;

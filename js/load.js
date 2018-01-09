@@ -3,23 +3,17 @@ var text2;
 var load = {
     preload : function() {
     
-
 		text2 = game.add.text(game.world.centerX, game.world.centerY, "Cargando...", { font: "25px Press Start 2P", fill: "#ffffff", align: "center" });
 		text2.anchor.setTo(0.5, 0.5);
 		
 		carga();
 		game.load.onFileComplete.add(fileComplete, this);
     	game.load.onLoadComplete.add(loadComplete, this);
-
-        
-
-
+				
     },
 
     create : function() {
-		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-		//game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-        game.state.start('menu');
+		game.state.start('menu');
     }
 };
 

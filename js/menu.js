@@ -6,10 +6,12 @@ var comenzar;
 var sky;
 var day = '#b2ddc8';
 var tween;
+var ani;
 
 var menu = {
     create : function() {
-		
+		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
         console.log("Pantalla Menu");
 		game.stage.backgroundColor = day;
 		
@@ -24,7 +26,8 @@ var menu = {
 		comenzar.inputEnabled = true;
 		comenzar.alpha = 0;
 		comenzar.setShadow(5, 5, 'rgba(0,0,0,0.5)', 15);
-		game.add.tween(comenzar).to( { alpha: 1 }, 2000, "Linear", true);
+		ani = game.add.tween(comenzar).to( { alpha: 1 }, 1500, "Linear", true, 0, -1);
+		
 		comenzar.events.onInputDown.add(start, this);		
 		
     }

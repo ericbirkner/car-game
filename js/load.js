@@ -1,6 +1,6 @@
 /* load.js */
 var text2;
-var load = {
+window.load = {
     preload : function() {
     
 		text2 = game.add.text(game.world.centerX, game.world.centerY, "Cargando...", { font: "25px Press Start 2P", fill: "#ffffff", align: "center" });

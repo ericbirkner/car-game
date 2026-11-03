@@ -8,7 +8,7 @@ var day = '#b2ddc8';
 var tween;
 var ani;
 
-var menu = {
+window.menu = {
     create : function() {
 		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;

@@ -27,7 +27,7 @@ var day = '#b2ddc8';
 var night = '#1f263b';
 var btn_salto;
 
-var play = {
+window.play = {
 	create: function () {
 		this.setInitialValues();
 		console.log("Play!");
@@ -62,7 +62,7 @@ var play = {
 		music = game.add.audio('music');
 
 		//musica de fondo
-		music.play();
+		music.play('', 0, 1, true);
 
 		/* Platform group */
 		platforms = game.add.group();

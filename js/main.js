@@ -22,9 +22,9 @@ if (testExp.test(navigator.userAgent)){
 var game = new Phaser.Game(config);
 
 
-game.state.add('boot', boot);
-game.state.add('load', load);
-game.state.add('menu', menu);
-game.state.add('play', play);
+game.state.add('boot', window.boot);
+game.state.add('load', window.load);
+game.state.add('menu', window.menu);
+game.state.add('play', window.play);
 
 game.state.start('boot');

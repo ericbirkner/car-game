@@ -1,6 +1,6 @@
 /* boot.js */
 var icon;
-var boot = {
+window.boot = {
     preload : function() {
         console.log("Booting!");
 		game.load.image('icon', 'assets/logo8bit.png');

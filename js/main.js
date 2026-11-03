@@ -3,6 +3,8 @@ testExp = new RegExp('Android|webOS|iPhone|iPad|' +
     		       'Opera Mini|IEMobile|Mobile' ,
     		      'i');
 
+window.scrollTo(0, 1);
+
 var config = {
     width: 1080,
     height: 720,
